@@ -1,0 +1,22 @@
+{
+  "name": "ted",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tinnvo/Ted-3.git"
+  },
+  "author": "TV&TN",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tinnvo/Ted-3/issues"
+  },
+  "homepage": "https://github.com/tinnvo/Ted-3#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
