@@ -14,6 +14,21 @@ app.use(log('dev'));
 // set static folder
 app.use(express.static(__dirname + '/static'));
 
+// check connection to postgres database
+var Sequelize = require('sequelize')
+  , sequelize = new Sequelize('postgres', 'postgres', '123456', {
+      dialect: "postgres",
+      port:    5432,
+    });
+
+sequelize
+  .authenticate()
+  .then(function(err) {
+    console.log('Connection has been established successfully.');
+  }, function (err) {
+    console.log('Unable to connect to the database:', err);
+  });
+
 // parse the requests
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
