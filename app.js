@@ -41,7 +41,7 @@ app.get('/', (req, res) => res.status(200).send({
     message: 'Welcome to TED',
 }));
 
-
+// delete on production
 // add users to db - TESTING ONLY
 app.get('/add', function(req, res) {
     sequelize
