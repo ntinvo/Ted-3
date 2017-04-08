@@ -33,7 +33,7 @@ var Users = sequelize.define('Users', {
 // parse the requests
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: false
+    extended: true
 }));
 
 // initial set up - catch root route
@@ -67,7 +67,7 @@ app.get('/add', function(req, res) {
 //                  API                   //
 //----------------------------------------//
 // get all users
-app.get('/api/users',function(req,res){
+app.get('/api/users',function(req, res){
   sequelize
     .sync()
     .then(function(err) {
@@ -75,11 +75,29 @@ app.get('/api/users',function(req,res){
         console.log(users);
         res.send(users);
       });
-      console.log('Got the Users');
     }, function (err) {
-      console.log('An error occurred!!!', err);
+      res.send('An error occurred!!!', err);
     });
 });
+
+// add a user to the database
+app.post('/api/users', function(req, res) {
+  sequelize
+    .sync()
+    .then(function(err) {
+      var userInstance = Users.build({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        address: req.body.address
+      });
+      userInstance.save();
+      res.send('Successfully added a user.');
+    }, function (err) {
+      res.send('An error occurred!!!', err);
+    });
+});
+
 
 // module.exports = app;
 app.listen(8000);
