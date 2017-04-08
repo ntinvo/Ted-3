@@ -1,4 +1,4 @@
-// dummy date to test the database
+// dummy data to test the database
 
 var usersList = [
   { name: 'Tin Vo',
@@ -15,6 +15,16 @@ var usersList = [
     email: 'balien@email.com',
     password: '111',
     address: '111 Ba Lien st'
+  },
+  { name: 'Tra Cho',
+    email: 'tra@email.com',
+    password: '222',
+    address: '222 Nga Tu Chuong Cho'
+  },
+  { name: 'Tuan Bo',
+    email: 'buffalo@email.com',
+    password: '3',
+    address: '3 Nga Tu Chuong Bo'
   }
 ];
 

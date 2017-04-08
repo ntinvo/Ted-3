@@ -22,39 +22,13 @@ var Sequelize = require('sequelize')
       port:    5432,
     });
 
-sequelize
-  .authenticate()
-  .then(function(err) {
-    console.log('Connection has been established successfully.');
-  }, function (err) {
-    console.log('Unable to connect to the database:', err);
-  });
-
+// define users table
 var Users = sequelize.define('Users', {
   name: Sequelize.STRING,
   email: Sequelize.STRING,
   password: Sequelize.STRING,
   address: Sequelize.STRING
 });
-
-sequelize
-  .sync({force:true})
-  .then(function(err) {
-    usersList.forEach(function(user) {
-      var userInstance = Users.build({
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        address: user.address
-      });
-      userInstance.save();
-    });
-    console.log('It worked.')
-  }, function (err) {
-    console.log('An error occurred!!!', err);
-  });
-
-
 
 // parse the requests
 app.use(bodyParser.json());
@@ -68,15 +42,44 @@ app.get('/', (req, res) => res.status(200).send({
 }));
 
 
+// add users to db - TESTING ONLY
+app.get('/add', function(req, res) {
+  sequelize
+    .sync({force:true})
+    .then(function(err) {
+      usersList.forEach(function(user) {
+        var userInstance = Users.build({
+          name: user.name,
+          email: user.email,
+          password: user.password,
+          address: user.address
+        });
+        userInstance.save();
+      });
+      console.log('It worked.')
+    }, function (err) {
+      console.log('An error occurred!!!', err);
+    });
+});
 
-//
-// // root route
-// app.get('/',function(req,res){
-// 	res.sendFile(path.join(__dirname + '/index.html'));
-// });
 
-
-
+//----------------------------------------//
+//                  API                   //
+//----------------------------------------//
+// get all users
+app.get('/api/users',function(req,res){
+  sequelize
+    .sync()
+    .then(function(err) {
+      Users.findAll().then(function(users) {
+        console.log(users);
+        res.send(users);
+      });
+      console.log('Got the Users');
+    }, function (err) {
+      console.log('An error occurred!!!', err);
+    });
+});
 
 // module.exports = app;
 app.listen(8000);
