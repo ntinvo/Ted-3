@@ -92,11 +92,32 @@ app.post('/api/users', function(req, res) {
         });
         userInstance.save();
         res.send('Successfully added a user.');
-    }, function (err) {
+    }, function(err) {
         res.send('An error occurred!!!', err);
     });
 });
 
+// delete a user BY EMAIL
+app.delete('/api/users', function(req, res) {
+    sequelize
+    .sync()
+    .then(function(err) {
+        Users.findOne({
+            where: { email: req.body.email }
+        }).then(function(user) {
+            if(!user) {
+                res.send('User does not exist!');
+            } else {
+                Users.destroy({
+                    where: { email: req.body.email }
+                });
+                res.send('Successfully deleted user ' + user.name + ' with email ' + user.email);
+            }
+        });
+    }, function(err) {
+        res.send('An error occurred!!!', err);
+    });
+});
 
 // module.exports = app;
 app.listen(8000);
