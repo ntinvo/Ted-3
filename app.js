@@ -1,50 +1,47 @@
-'use strict';
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 
-// imports/requires some libs
-const express       = require('express');
-const log           = require('morgan');
-const bodyParser    = require('body-parser');
+var index = require('./routes/index');
+var users = require('./routes/users');
 
-// set up express app
-const app = express();
+var app = express();
 
-// log requests to console
-app.use(log('dev'));
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'ejs');
 
-// set static folder
-app.use(express.static(__dirname + '/static'));
-
-// check connection to postgres database
-var Sequelize = require('sequelize')
-  , sequelize = new Sequelize('postgres', 'postgres', '123456', {
-      dialect: "postgres",
-      port:    5432,
-    });
-
-sequelize
-  .authenticate()
-  .then(function(err) {
-    console.log('Connection has been established successfully.');
-  }, function (err) {
-    console.log('Unable to connect to the database:', err);
-  });
-
-// parse the requests
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-// initial set up - catch all routes
-app.get('*', (req, res) => res.status(200).send({
-    message: 'Welcome to TED',
-}));
+app.use('/', index);
+app.use('/api/users', users);
 
-// root route
-app.get('/',function(req,res){
-	res.sendFile(path.join(__dirname + '/index.html'));
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
-// module.exports = app;
-app.listen(8000);
-console.log('running at port 8000');
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('404.html');
+});
+
+module.exports = app;
