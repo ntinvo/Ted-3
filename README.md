@@ -76,3 +76,6 @@ Additional notes about deployment will be available soon.
 * **Tin Vo** - *Initial work* - [tinnvo](https://github.com/tinnvo)
 
 * **Thuan Nguyen** - *Initial work* - [keangoo](https://github.com/keangoo)
+
+
+![Ted](https://octodex.github.com/images/dojocat.jpg)
