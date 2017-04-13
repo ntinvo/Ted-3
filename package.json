@@ -5,12 +5,14 @@
   "scripts": {
     "client": "cd client && npm run start",
     "server": "nodemon --watch server --exec babel-node -- ./server/bin/www",
-    "start": "concurrent \"npm run build:watch\" \"npm run server\"",
+    "start": "concurrently \"npm run build:watch\" \"npm run server\"",
+    "startdev": "concurrently \"npm run build:watch\" \"npm run serve\" \"npm run server\"",
     "build": "cd client && npm run build",
+    "serve": "lite-server -c=bs-config.json",
     "build:watch": "cd client && npm run build:watch",
     "build:e2e": "cd client && npm run build:e2e",
     "installclient": "cd client && npm install",
-    "setup": "concurrent \"yarn install\" \"cd client & yarn install\""
+    "setup": "concurrently \"yarn install\" \"cd client & yarn install\""
   },
   "dependencies": {
     "babel-preset-es2015": "^6.24.1",
@@ -26,6 +28,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
+    "lite-server": "^2.2.2",
     "concurrently": "^3.4.0"
   }
 }

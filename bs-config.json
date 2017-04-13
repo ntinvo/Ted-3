@@ -1,8 +1,9 @@
 {
   "server": {
-    "baseDir": "src",
+    "baseDir": ["server/views/", "client"],
     "routes": {
       "/node_modules": "node_modules"
     }
-  }
+  },
+  "port": 8000
 }
