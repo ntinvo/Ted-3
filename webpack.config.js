@@ -10,9 +10,9 @@ module.exports = {
         filename: 'bundle.js'
     },
     module: {
-        loaders: [{
-            test: /\.ts$/,
-            loader: 'ts-loader'
-        }]
+        loaders: [
+            { test: /\.ts$/, loader: 'ts-loader'},
+            { test: /\.json$/, loader: 'json-loader'},    
+        ]
     }
 };
