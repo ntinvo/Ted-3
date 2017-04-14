@@ -12,7 +12,10 @@
     "build:watch": "cd client && npm run build:watch",
     "build:e2e": "cd client && npm run build:e2e",
     "installclient": "cd client && npm install",
-    "setup": "concurrently \"yarn install\" \"cd client & yarn install\""
+    "setup": "concurrently \"yarn install\" \"cd client & yarn install\"",
+    "webpack": "webpack --config webpack.config.js",
+    "webpack:err": "webpack --display-error-details",
+    "webpack:clean": "rm -rf client/dist"
   },
   "dependencies": {
     "babel-preset-es2015": "^6.24.1",
@@ -29,6 +32,11 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "lite-server": "^2.2.2",
-    "concurrently": "^3.4.0"
+    "concurrently": "^3.4.0",
+    "webpack": "^2.3.3",
+    "ts-loader": "^2.0.3",
+    "typescript": "^2.1.6"
+
+
   }
 }

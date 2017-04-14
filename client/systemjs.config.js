@@ -4,6 +4,9 @@
  */
 (function (global) {
   System.config({
+    meta: {
+        './dist/' : { format: 'global'}
+    },
     paths: {
       // paths serve as alias
       'npm:': 'node_modules/'
