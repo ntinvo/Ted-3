@@ -1,11 +1,13 @@
 var path = require('path');
 var webpack = require('webpack');
-var htmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     context: __dirname + "/client",
     entry: {
         main: './src/main.ts',
+        style: './public/stylesheets/style.css'
     },
     output: {
         path: path.resolve(__dirname + '/client', 'dist'),
@@ -17,15 +19,22 @@ module.exports = {
             { test: /\.ts$/, loader: 'ts-loader'},
             { test: /\.json$/, loader: 'json-loader'},
             { test: /\.html$/, loader: 'html-loader'},
-            { test: /\.css$/, loader: 'style-loader!css-loader'},
+            {
+                test: /\.css$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader"
+                })
+            }
         ]
     },
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: ['.ts', '.js', '.css']
     },
     plugins: [
-        new htmlWebpackPlugin({
+        new HtmlWebpackPlugin({
             template: './public/static/template.html'
-        })
+        }),
+        new ExtractTextPlugin("[name].css")
     ]
 };
